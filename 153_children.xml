@@ -1,0 +1,347 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Attack_Patterns xmlns:html="http://www.w3.org/1999/xhtml" xmlns:ns0="http://capec.mitre.org/capec-3"><ns0:Attack_Pattern ID="126" Name="Path Traversal" Abstraction="Standard" Status="Draft">
+         <ns0:Description>An adversary uses path manipulation methods to exploit insufficient input validation of a target to obtain access to data that should be not be retrievable by ordinary well-formed requests. A typical variety of this attack involves specifying a path to a desired file together with dot-dot-slash characters, resulting in the file access API or function traversing out of the intended directory structure and into the root file system. By replacing or modifying the expected path information the access function or API retrieves the file desired by the attacker. These attacks either involve the attacker providing a complete path to a targeted file or using control characters (e.g. path separators (/ or \) and/or dots (.)) to reach desired directories or files.</ns0:Description>
+         <ns0:Alternate_Terms>
+            <ns0:Alternate_Term>
+               <ns0:Term>Directory Traversal</ns0:Term>
+            </ns0:Alternate_Term>
+         </ns0:Alternate_Terms>
+         <ns0:Likelihood_Of_Attack>High</ns0:Likelihood_Of_Attack>
+         <ns0:Typical_Severity>Very High</ns0:Typical_Severity>
+         <ns0:Related_Attack_Patterns>
+            <ns0:Related_Attack_Pattern Nature="ChildOf" CAPEC_ID="153" />
+            <ns0:Related_Attack_Pattern Nature="CanPrecede" CAPEC_ID="664" />
+         </ns0:Related_Attack_Patterns>
+         <ns0:Execution_Flow>
+            <ns0:Attack_Step>
+               <ns0:Step>1</ns0:Step>
+               <ns0:Phase>Explore</ns0:Phase>
+               <ns0:Description>[Fingerprinting of the operating system] In order to perform a valid path traversal, the attacker needs to know what the underlying OS is so that the proper file seperator is used.</ns0:Description>
+               <ns0:Technique>Port mapping. Identify ports that the system is listening on, and attempt to identify inputs and protocol types on those ports.</ns0:Technique>
+               <ns0:Technique>TCP/IP Fingerprinting. The attacker uses various software to make connections or partial connections and observe idiosyncratic responses from the operating system. Using those responses, they attempt to guess the actual operating system.</ns0:Technique>
+               <ns0:Technique>Induce errors to find informative error messages</ns0:Technique>
+            </ns0:Attack_Step>
+            <ns0:Attack_Step>
+               <ns0:Step>2</ns0:Step>
+               <ns0:Phase>Explore</ns0:Phase>
+               <ns0:Description>[Survey the Application to Identify User-controllable Inputs] The attacker surveys the target application to identify all user-controllable file inputs</ns0:Description>
+            </ns0:Attack_Step>
+            <ns0:Attack_Step>
+               <ns0:Step>3</ns0:Step>
+               <ns0:Phase>Experiment</ns0:Phase>
+               <ns0:Description>[Vary inputs, looking for malicious results] Depending on whether the application being exploited is a remote or local one, the attacker crafts the appropriate malicious input containing the path of the targeted file or other file system control syntax to be passed to the application</ns0:Description>
+            </ns0:Attack_Step>
+            <ns0:Attack_Step>
+               <ns0:Step>4</ns0:Step>
+               <ns0:Phase>Exploit</ns0:Phase>
+               <ns0:Description>[Manipulate files accessible by the application] The attacker may steal information or directly manipulate files (delete, copy, flush, etc.)</ns0:Description>
+            </ns0:Attack_Step>
+         </ns0:Execution_Flow>
+         <ns0:Prerequisites>
+            <ns0:Prerequisite>The attacker must be able to control the path that is requested of the target.</ns0:Prerequisite>
+            <ns0:Prerequisite>The target must fail to adequately sanitize incoming paths</ns0:Prerequisite>
+         </ns0:Prerequisites>
+         <ns0:Skills_Required>
+            <ns0:Skill Level="Low">Simple command line attacks or to inject the malicious payload in a web page.</ns0:Skill>
+            <ns0:Skill Level="Medium">Customizing attacks to bypass non trivial filters in the application.</ns0:Skill>
+         </ns0:Skills_Required>
+         <ns0:Resources_Required>
+            <ns0:Resource>The ability to manually manipulate path information either directly through a client application relative to the service or application or via a proxy application.</ns0:Resource>
+         </ns0:Resources_Required>
+         <ns0:Consequences>
+            <ns0:Consequence>
+               <ns0:Scope>Integrity</ns0:Scope>
+               <ns0:Scope>Confidentiality</ns0:Scope>
+               <ns0:Scope>Availability</ns0:Scope>
+               <ns0:Impact>Execute Unauthorized Commands</ns0:Impact>
+               <ns0:Note>The attacker may be able to create or overwrite critical files that are used to execute code, such as programs or libraries.</ns0:Note>
+            </ns0:Consequence>
+            <ns0:Consequence>
+               <ns0:Scope>Integrity</ns0:Scope>
+               <ns0:Impact>Modify Data</ns0:Impact>
+               <ns0:Note>The attacker may be able to overwrite or create critical files, such as programs, libraries, or important data. If the targeted file is used for a security mechanism, then the attacker may be able to bypass that mechanism. For example, appending a new account at the end of a password file may allow an attacker to bypass authentication.</ns0:Note>
+            </ns0:Consequence>
+            <ns0:Consequence>
+               <ns0:Scope>Confidentiality</ns0:Scope>
+               <ns0:Impact>Read Data</ns0:Impact>
+               <ns0:Note>The attacker may be able read the contents of unexpected files and expose sensitive data. If the targeted file is used for a security mechanism, then the attacker may be able to bypass that mechanism. For example, by reading a password file, the attacker could conduct brute force password guessing attacks in order to break into an account on the system.</ns0:Note>
+            </ns0:Consequence>
+            <ns0:Consequence>
+               <ns0:Scope>Availability</ns0:Scope>
+               <ns0:Impact>Unreliable Execution</ns0:Impact>
+               <ns0:Note>The attacker may be able to overwrite, delete, or corrupt unexpected critical files such as programs, libraries, or important data. This may prevent the software from working at all and in the case of a protection mechanisms such as authentication, it has the potential to lockout every user of the software.</ns0:Note>
+            </ns0:Consequence>
+         </ns0:Consequences>
+         <ns0:Mitigations>
+            <ns0:Mitigation>Design: Configure the access control correctly.</ns0:Mitigation>
+            <ns0:Mitigation>Design: Enforce principle of least privilege.</ns0:Mitigation>
+            <ns0:Mitigation>Design: Execute programs with constrained privileges, so parent process does not open up further vulnerabilities. Ensure that all directories, temporary directories and files, and memory are executing with limited privileges to protect against remote execution.</ns0:Mitigation>
+            <ns0:Mitigation>Design: Input validation. Assume that user inputs are malicious. Utilize strict type, character, and encoding enforcement.</ns0:Mitigation>
+            <ns0:Mitigation>Design: Proxy communication to host, so that communications are terminated at the proxy, sanitizing the requests before forwarding to server host.</ns0:Mitigation>
+            <ns0:Mitigation>Design: Run server interfaces with a non-root account and/or utilize chroot jails or other configuration techniques to constrain privileges even if attacker gains some limited access to commands.</ns0:Mitigation>
+            <ns0:Mitigation>Implementation: Host integrity monitoring for critical files, directories, and processes. The goal of host integrity monitoring is to be aware when a security issue has occurred so that incident response and other forensic activities can begin.</ns0:Mitigation>
+            <ns0:Mitigation>Implementation: Perform input validation for all remote content, including remote and user-generated content.</ns0:Mitigation>
+            <ns0:Mitigation>Implementation: Perform testing such as pen-testing and vulnerability scanning to identify directories, programs, and interfaces that grant direct access to executables.</ns0:Mitigation>
+            <ns0:Mitigation>Implementation: Use indirect references rather than actual file names.</ns0:Mitigation>
+            <ns0:Mitigation>Implementation: Use possible permissions on file access when developing and deploying web applications.</ns0:Mitigation>
+            <ns0:Mitigation>Implementation: Validate user input by only accepting known good. Ensure all content that is delivered to client is sanitized against an acceptable content specification -- using an allowlist approach.</ns0:Mitigation>
+         </ns0:Mitigations>
+         <ns0:Example_Instances>
+            <ns0:Example>
+               <html:p>An example of using path traversal to attack some set of resources on a web server is to use a standard HTTP request</html:p>
+               <html:div style="margin-left:1em;" class="informative">http://example/../../../../../etc/passwd</html:div>
+               <html:p>From an attacker point of view, this may be sufficient to gain access to the password file on a poorly protected system. If the attacker can list directories of critical resources then read only access is not sufficient to protect the system.</html:p>
+            </ns0:Example>
+         </ns0:Example_Instances>
+         <ns0:Related_Weaknesses>
+            <ns0:Related_Weakness CWE_ID="22" />
+         </ns0:Related_Weaknesses>
+         <ns0:Taxonomy_Mappings>
+            <ns0:Taxonomy_Mapping Taxonomy_Name="WASC">
+               <ns0:Entry_ID>33</ns0:Entry_ID>
+               <ns0:Entry_Name>Path Traversal</ns0:Entry_Name>
+            </ns0:Taxonomy_Mapping>
+            <ns0:Taxonomy_Mapping Taxonomy_Name="OWASP Attacks">
+               <ns0:Entry_Name>Path Traversal</ns0:Entry_Name>
+            </ns0:Taxonomy_Mapping>
+         </ns0:Taxonomy_Mappings>
+         <ns0:References>
+            <ns0:Reference External_Reference_ID="REF-1" />
+            <ns0:Reference External_Reference_ID="REF-9" Section="Testing for Path Traversal (OWASP-AZ-001)" />
+            <ns0:Reference External_Reference_ID="REF-10" Section="WASC-33 - Path Traversal" />
+         </ns0:References>
+         <ns0:Content_History>
+            <ns0:Submission>
+               <ns0:Submission_Name>CAPEC Content Team</ns0:Submission_Name>
+               <ns0:Submission_Organization>The MITRE Corporation</ns0:Submission_Organization>
+               <ns0:Submission_Date>2014-06-23</ns0:Submission_Date>
+            </ns0:Submission>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2017-01-09</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Activation_Zone, Alternate_Terms, Architectural_Paradigms, Attack_Motivation-Consequences, Attacker_Skills_or_Knowledge_Required, CIA_Impact, Examples-Instances, Frameworks, Injection_Vector, Languages, Payload, Payload_Activation_Impact, Platforms, Purposes, References, Related_Attack_Patterns, Related_Vulnerabilities, Related_Weaknesses, Relevant_Security_Requirements, Solutions_and_Mitigations, Technical_Context, Typical_Likelihood_of_Exploit, Typical_Severity</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2020-07-30</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Mitigations</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2020-12-17</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated References, Taxonomy_Mappings</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2021-06-24</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Related_Attack_Patterns</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2021-10-21</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Execution_Flow</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2022-09-29</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Example_Instances</ns0:Modification_Comment>
+            </ns0:Modification>
+         </ns0:Content_History>
+      </ns0:Attack_Pattern>
+      <ns0:Attack_Pattern ID="128" Name="Integer Attacks" Abstraction="Standard" Status="Draft">
+         <ns0:Description>An attacker takes advantage of the structure of integer variables to cause these variables to assume values that are not expected by an application. For example, adding one to the largest positive integer in a signed integer variable results in a negative number. Negative numbers may be illegal in an application and the application may prevent an attacker from providing them directly, but the application may not consider that adding two positive numbers can create a negative number do to the structure of integer storage formats.</ns0:Description>
+         <ns0:Typical_Severity>Medium</ns0:Typical_Severity>
+         <ns0:Related_Attack_Patterns>
+            <ns0:Related_Attack_Pattern Nature="ChildOf" CAPEC_ID="153" />
+         </ns0:Related_Attack_Patterns>
+         <ns0:Prerequisites>
+            <ns0:Prerequisite>The target application must have an integer variable for which only some of the possible integer values are expected by the application and where there are no checks on the value of the variable before use.</ns0:Prerequisite>
+            <ns0:Prerequisite>The attacker must be able to manipulate the targeted integer variable such that normal operations result in non-standard values due to the storage structure of integers.</ns0:Prerequisite>
+         </ns0:Prerequisites>
+         <ns0:Resources_Required>
+            <ns0:Resource>None: No specialized resources are required to execute this type of attack.</ns0:Resource>
+         </ns0:Resources_Required>
+         <ns0:Related_Weaknesses>
+            <ns0:Related_Weakness CWE_ID="682" />
+         </ns0:Related_Weaknesses>
+         <ns0:Content_History>
+            <ns0:Submission>
+               <ns0:Submission_Name>CAPEC Content Team</ns0:Submission_Name>
+               <ns0:Submission_Organization>The MITRE Corporation</ns0:Submission_Organization>
+               <ns0:Submission_Date>2014-06-23</ns0:Submission_Date>
+            </ns0:Submission>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2017-01-09</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Related_Attack_Patterns</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2017-08-04</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Resources_Required</ns0:Modification_Comment>
+            </ns0:Modification>
+         </ns0:Content_History>
+      </ns0:Attack_Pattern>
+      <ns0:Attack_Pattern ID="267" Name="Leverage Alternate Encoding" Abstraction="Standard" Status="Draft">
+         <ns0:Description>An adversary leverages the possibility to encode potentially harmful input or content used by applications such that the applications are ineffective at validating this encoding standard.</ns0:Description>
+         <ns0:Likelihood_Of_Attack>High</ns0:Likelihood_Of_Attack>
+         <ns0:Typical_Severity>High</ns0:Typical_Severity>
+         <ns0:Related_Attack_Patterns>
+            <ns0:Related_Attack_Pattern Nature="ChildOf" CAPEC_ID="153" />
+         </ns0:Related_Attack_Patterns>
+         <ns0:Execution_Flow>
+            <ns0:Attack_Step>
+               <ns0:Step>1</ns0:Step>
+               <ns0:Phase>Explore</ns0:Phase>
+               <ns0:Description>[Survey the application for user-controllable inputs] Using a browser, an automated tool or by inspecting the application, an adversary records all entry points to the application.</ns0:Description>
+               <ns0:Technique>Use a spidering tool to follow and record all links and analyze the web pages to find entry points. Make special note of any links that include parameters in the URL.</ns0:Technique>
+               <ns0:Technique>Use a proxy tool to record all user input entry points visited during a manual traversal of the web application.</ns0:Technique>
+               <ns0:Technique>Use a browser to manually explore the website and analyze how it is constructed. Many browsers' plugins are available to facilitate the analysis or automate the discovery.</ns0:Technique>
+               <ns0:Technique>Manually inspect the application to find entry points.</ns0:Technique>
+            </ns0:Attack_Step>
+            <ns0:Attack_Step>
+               <ns0:Step>2</ns0:Step>
+               <ns0:Phase>Experiment</ns0:Phase>
+               <ns0:Description>[Probe entry points to locate vulnerabilities] The adversary uses the entry points gathered in the "Explore" phase as a target list and injects various payloads using a variety of different types of encodings to determine if an entry point actually represents a vulnerability with insufficient validation logic and to characterize the extent to which the vulnerability can be exploited.</ns0:Description>
+               <ns0:Technique>Try to use different encodings of content in order to bypass validation routines.</ns0:Technique>
+            </ns0:Attack_Step>
+         </ns0:Execution_Flow>
+         <ns0:Prerequisites>
+            <ns0:Prerequisite>The application's decoder accepts and interprets encoded characters. Data canonicalization, input filtering and validating is not done properly leaving the door open to harmful characters for the target host.</ns0:Prerequisite>
+         </ns0:Prerequisites>
+         <ns0:Skills_Required>
+            <ns0:Skill Level="Low">An adversary can inject different representation of a filtered character in a different encoding.</ns0:Skill>
+            <ns0:Skill Level="Medium">An adversary may craft subtle encoding of input data by using the knowledge that they have gathered about the target host.</ns0:Skill>
+         </ns0:Skills_Required>
+         <ns0:Consequences>
+            <ns0:Consequence>
+               <ns0:Scope>Integrity</ns0:Scope>
+               <ns0:Impact>Modify Data</ns0:Impact>
+            </ns0:Consequence>
+            <ns0:Consequence>
+               <ns0:Scope>Confidentiality</ns0:Scope>
+               <ns0:Impact>Read Data</ns0:Impact>
+            </ns0:Consequence>
+            <ns0:Consequence>
+               <ns0:Scope>Authorization</ns0:Scope>
+               <ns0:Impact>Execute Unauthorized Commands</ns0:Impact>
+               <ns0:Note>Run Arbitrary Code</ns0:Note>
+            </ns0:Consequence>
+            <ns0:Consequence>
+               <ns0:Scope>Accountability</ns0:Scope>
+               <ns0:Scope>Authentication</ns0:Scope>
+               <ns0:Scope>Authorization</ns0:Scope>
+               <ns0:Scope>Non-Repudiation</ns0:Scope>
+               <ns0:Impact>Gain Privileges</ns0:Impact>
+            </ns0:Consequence>
+            <ns0:Consequence>
+               <ns0:Scope>Access Control</ns0:Scope>
+               <ns0:Scope>Authorization</ns0:Scope>
+               <ns0:Impact>Bypass Protection Mechanism</ns0:Impact>
+            </ns0:Consequence>
+            <ns0:Consequence>
+               <ns0:Scope>Availability</ns0:Scope>
+               <ns0:Impact>Unreliable Execution</ns0:Impact>
+               <ns0:Impact>Resource Consumption</ns0:Impact>
+               <ns0:Note>Denial of Service</ns0:Note>
+            </ns0:Consequence>
+         </ns0:Consequences>
+         <ns0:Mitigations>
+            <ns0:Mitigation>Assume all input might use an improper representation. Use canonicalized data inside the application; all data must be converted into the representation used inside the application (UTF-8, UTF-16, etc.)</ns0:Mitigation>
+            <ns0:Mitigation>Assume all input is malicious. Create an allowlist that defines all valid input to the software system based on the requirements specifications. Input that does not match against the allowlist should not be permitted to enter into the system. Test your decoding process against malicious input.</ns0:Mitigation>
+         </ns0:Mitigations>
+         <ns0:Example_Instances>
+            <ns0:Example>Microsoft Internet Explorer 5.01 SP4, 6, 6 SP1, and 7 does not properly handle unspecified "encoding strings," which allows remote adversaries to bypass the Same Origin Policy and obtain sensitive information via a crafted web site, aka "Post Encoding Information Disclosure Vulnerability." Related Vulnerabilities CVE-2010-0488</ns0:Example>
+            <ns0:Example>Adversaries may attempt to make an executable or file difficult to discover or analyze by encrypting, encoding, or otherwise obfuscating its contents on the system or in transit. This is common behavior that can be used across different platforms and the network to evade defenses.</ns0:Example>
+         </ns0:Example_Instances>
+         <ns0:Related_Weaknesses>
+            <ns0:Related_Weakness CWE_ID="173" />
+            <ns0:Related_Weakness CWE_ID="172" />
+            <ns0:Related_Weakness CWE_ID="180" />
+            <ns0:Related_Weakness CWE_ID="181" />
+            <ns0:Related_Weakness CWE_ID="73" />
+            <ns0:Related_Weakness CWE_ID="74" />
+            <ns0:Related_Weakness CWE_ID="20" />
+            <ns0:Related_Weakness CWE_ID="697" />
+            <ns0:Related_Weakness CWE_ID="692" />
+         </ns0:Related_Weaknesses>
+         <ns0:Taxonomy_Mappings>
+            <ns0:Taxonomy_Mapping Taxonomy_Name="ATTACK">
+               <ns0:Entry_ID>1027</ns0:Entry_ID>
+               <ns0:Entry_Name>Obfuscated Files or Information</ns0:Entry_Name>
+            </ns0:Taxonomy_Mapping>
+         </ns0:Taxonomy_Mappings>
+         <ns0:References>
+            <ns0:Reference External_Reference_ID="REF-108" Section="WASC-20 - Improper Input Handling" />
+            <ns0:Reference External_Reference_ID="REF-109" Section="Category: Encoding" />
+            <ns0:Reference External_Reference_ID="REF-110" Section="Canonicalization, locale and Unicode" />
+            <ns0:Reference External_Reference_ID="REF-69" Section="XSS (Cross Site Scripting) Prevention Cheat Sheet" />
+            <ns0:Reference External_Reference_ID="REF-112" Section="Chapter 5 Section 9: Character Encoding" />
+            <ns0:Reference External_Reference_ID="REF-113" Section="Character encoding" />
+            <ns0:Reference External_Reference_ID="REF-114" />
+         </ns0:References>
+         <ns0:Content_History>
+            <ns0:Submission>
+               <ns0:Submission_Name>CAPEC Content Team</ns0:Submission_Name>
+               <ns0:Submission_Organization>The MITRE Corporation</ns0:Submission_Organization>
+               <ns0:Submission_Date>2014-06-23</ns0:Submission_Date>
+            </ns0:Submission>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2017-01-09</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Related_Attack_Patterns</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2018-07-31</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Description Summary, Examples-Instances, References</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2019-04-04</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Consequences</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2020-07-30</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Mitigations, Skills_Required, Taxonomy_Mappings</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2020-12-17</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated References</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2021-06-24</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Related_Weaknesses</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2022-02-22</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Example_Instances, Execution_Flow, Skills_Required</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2022-09-29</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Taxonomy_Mappings</ns0:Modification_Comment>
+            </ns0:Modification>
+         </ns0:Content_History>
+      </ns0:Attack_Pattern>
+      </Attack_Patterns>

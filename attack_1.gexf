@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2024-07-08">
+    <creator>NetworkX 3.3</creator>
+  </meta>
+  <graph defaultedgetype="directed" mode="static" name="">
+    <nodes>
+      <node id="Weakness_276" label="276" />
+      <node id="Weakness_285" label="285" />
+      <node id="Weakness_434" label="434" />
+      <node id="Weakness_693" label="693" />
+      <node id="Weakness_732" label="732" />
+      <node id="Weakness_1191" label="1191" />
+      <node id="Weakness_1193" label="1193" />
+      <node id="Weakness_1220" label="1220" />
+      <node id="Weakness_1297" label="1297" />
+      <node id="Weakness_1311" label="1311" />
+      <node id="Weakness_1314" label="1314" />
+      <node id="Weakness_1315" label="1315" />
+      <node id="Weakness_1318" label="1318" />
+      <node id="Weakness_1320" label="1320" />
+      <node id="Weakness_1321" label="1321" />
+      <node id="Weakness_1327" label="1327" />
+      <node id="Attack_1" label="Accessing Functionality Not Properly Constrained by ACLs (ID: 1)" />
+    </nodes>
+    <edges>
+      <edge source="Weakness_276" target="Attack_1" id="0" />
+      <edge source="Weakness_285" target="Attack_1" id="1" />
+      <edge source="Weakness_434" target="Attack_1" id="2" />
+      <edge source="Weakness_693" target="Attack_1" id="3" />
+      <edge source="Weakness_732" target="Attack_1" id="4" />
+      <edge source="Weakness_1191" target="Attack_1" id="5" />
+      <edge source="Weakness_1193" target="Attack_1" id="6" />
+      <edge source="Weakness_1220" target="Attack_1" id="7" />
+      <edge source="Weakness_1297" target="Attack_1" id="8" />
+      <edge source="Weakness_1311" target="Attack_1" id="9" />
+      <edge source="Weakness_1314" target="Attack_1" id="10" />
+      <edge source="Weakness_1315" target="Attack_1" id="11" />
+      <edge source="Weakness_1318" target="Attack_1" id="12" />
+      <edge source="Weakness_1320" target="Attack_1" id="13" />
+      <edge source="Weakness_1321" target="Attack_1" id="14" />
+      <edge source="Weakness_1327" target="Attack_1" id="15" />
+    </edges>
+  </graph>
+</gexf>

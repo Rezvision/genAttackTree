@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<DAG><node id="Weakness_707"><label>Weakness ID: 707</label></node><node id="Attack_276"><label>Inter-component Protocol Manipulation (ID: 276)</label></node><link><source>Weakness_707</source><target>Attack_276</target></link></DAG>

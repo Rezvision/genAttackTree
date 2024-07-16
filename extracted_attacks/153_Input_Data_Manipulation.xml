@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ns0:Attack_Pattern xmlns:html="http://www.w3.org/1999/xhtml" xmlns:ns0="http://capec.mitre.org/capec-3" ID="153" Name="Input Data Manipulation" Abstraction="Meta" Status="Draft">
+         <ns0:Description>An attacker exploits a weakness in input validation by controlling the format, structure, and composition of data to an input-processing interface. By supplying input of a non-standard or unexpected form an attacker can adversely impact the security of the target.</ns0:Description>
+         <ns0:Extended_Description>
+            <html:p>For example, using a different character encoding might cause dangerous text to be treated as safe text. Alternatively, the attacker may use certain flags, such as file extensions, to make a target application believe that provided data should be handled using a certain interpreter when the data is not actually of the appropriate type. This can lead to bypassing protection mechanisms, forcing the target to use specific components for input processing, or otherwise causing the user's data to be handled differently than might otherwise be expected. This attack differs from Variable Manipulation in that Variable Manipulation attempts to subvert the target's processing through the value of the input while Input Data Manipulation seeks to control how the input is processed.</html:p>
+         </ns0:Extended_Description>
+         <ns0:Typical_Severity>Medium</ns0:Typical_Severity>
+         <ns0:Prerequisites>
+            <ns0:Prerequisite>The target must accept user data for processing and the manner in which this data is processed must depend on some aspect of the format or flags that the attacker can control.</ns0:Prerequisite>
+         </ns0:Prerequisites>
+         <ns0:Resources_Required>
+            <ns0:Resource>None: No specialized resources are required to execute this type of attack.</ns0:Resource>
+         </ns0:Resources_Required>
+         <ns0:Related_Weaknesses>
+            <ns0:Related_Weakness CWE_ID="20" />
+         </ns0:Related_Weaknesses>
+         <ns0:Content_History>
+            <ns0:Submission>
+               <ns0:Submission_Name>CAPEC Content Team</ns0:Submission_Name>
+               <ns0:Submission_Organization>The MITRE Corporation</ns0:Submission_Organization>
+               <ns0:Submission_Date>2014-06-23</ns0:Submission_Date>
+            </ns0:Submission>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2017-01-09</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Related_Attack_Patterns</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2017-08-04</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Resources_Required</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2019-04-04</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Related_Weaknesses</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2022-02-22</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Description, Extended_Description</ns0:Modification_Comment>
+            </ns0:Modification>
+         </ns0:Content_History>
+      </ns0:Attack_Pattern>
+      

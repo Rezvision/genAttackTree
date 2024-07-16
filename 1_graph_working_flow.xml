@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sandtree>
+    <node refinement="disjunctive">
+        <label>Privilege Abuse (ID: 122)</label>
+        <node refinement="disjunctive">
+            <label>Accessing Functionality Not Properly Constrained by ACLs (ID: 1)</label>
+            <node refinement="sequential">
+                <label>Execution Flow</label>
+                <node refinement="conjunctive">
+                    <label>Step 1: Survey</label>
+                </node>
+                <node refinement="conjunctive">
+                    <label>Step 2: Identify Functionality</label>
+                </node>
+                <node refinement="conjunctive">
+                    <label>Step 3: Iterate over access capabilities</label>
+                </node>
+            </node>
+            <node refinement="disjunctive">
+                <label>Restful Privilege Elevation (ID: 58)</label>
+            </node>
+            <node refinement="disjunctive">
+                <label>Exploitation of Improperly Configured or Implemented Memory Protections (ID: 679)</label>
+            </node>
+            <node refinement="disjunctive">
+                <label>Exploitation of Improperly Controlled Registers (ID: 680)</label>
+            </node>
+            <node refinement="disjunctive">
+                <label>Exploitation of Improperly Controlled Hardware Security Identifiers (ID: 681)</label>
+            </node>
+        </node>
+    </node>
+</sandtree>

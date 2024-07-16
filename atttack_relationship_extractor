@@ -1,0 +1,48 @@
+import xml.etree.ElementTree as ET
+import os
+
+# Function to parse XML file and build parent-child relationships
+def build_parent_child_map(xml_file):
+    tree = ET.parse(xml_file)
+    root = tree.getroot()
+    namespace = {'capec': 'http://capec.mitre.org/capec-3'}
+    parent_child_map = {}
+
+    # Build the mapping of parent to children
+    for attack in root.findall('.//capec:Attack_Pattern', namespace):
+        attack_id = attack.get('ID')
+        for related in attack.findall('.//capec:Related_Attack_Pattern', namespace):
+            if related.get('Nature') == 'ChildOf':
+                parent_id = related.get('CAPEC_ID')
+                if parent_id not in parent_child_map:
+                    parent_child_map[parent_id] = []
+                parent_child_map[parent_id].append(attack)
+
+    return parent_child_map
+
+# Function to write attack patterns to a file
+def write_attacks_to_file(attacks, output_file):
+    root = ET.Element('Attack_Patterns')
+
+    for attack in attacks:
+        root.append(attack)
+
+    tree = ET.ElementTree(root)
+    tree.write(output_file, encoding='utf-8', xml_declaration=True)
+    print(f"Attack patterns saved to {output_file}")
+
+# Function to extract and save attack patterns for a given parent ID
+def extract_and_save_attacks(xml_file, parent_id):
+    parent_child_map = build_parent_child_map(xml_file)
+
+    if parent_id in parent_child_map:
+        output_file = f"{parent_id}_children.xml"
+        write_attacks_to_file(parent_child_map[parent_id], output_file)
+    else:
+        print(f"No child attack patterns found for ID {parent_id}")
+
+if __name__ == "__main__":
+    xml_file = 'attack_patterns.xml'  # Path to your XML file
+    parent_id = '153'  # Replace with the desired parent ID
+
+    extract_and_save_attacks(xml_file, parent_id)

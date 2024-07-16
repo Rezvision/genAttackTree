@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sandtree><node refinement="disjunctive"><label>Weakness ID: 276</label><node refinement="disjunctive"><label>Accessing Functionality Not Properly Constrained by ACLs (ID: 1)</label></node><node refinement="disjunctive"><label>Directory Indexing (ID: 127)</label></node><node refinement="disjunctive"><label>Web Server Logs Tampering (ID: 81)</label></node></node></sandtree>

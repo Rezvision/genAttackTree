@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ns0:Attack_Pattern xmlns:ns0="http://capec.mitre.org/capec-3" ID="593" Name="Session Hijacking" Abstraction="Standard" Status="Stable">
+         <ns0:Description>This type of attack involves an adversary that exploits weaknesses in an application's use of sessions in performing authentication. The adversary is able to steal or manipulate an active session and use it to gain unathorized access to the application.</ns0:Description>
+         <ns0:Likelihood_Of_Attack>High</ns0:Likelihood_Of_Attack>
+         <ns0:Typical_Severity>Very High</ns0:Typical_Severity>
+         <ns0:Related_Attack_Patterns>
+            <ns0:Related_Attack_Pattern Nature="ChildOf" CAPEC_ID="21" />
+         </ns0:Related_Attack_Patterns>
+         <ns0:Execution_Flow>
+            <ns0:Attack_Step>
+               <ns0:Step>1</ns0:Step>
+               <ns0:Phase>Explore</ns0:Phase>
+               <ns0:Description>[Discover Existing Session Token] Through varrying means, an adversary will discover and store an existing session token for some other authenticated user session.</ns0:Description>
+            </ns0:Attack_Step>
+            <ns0:Attack_Step>
+               <ns0:Step>2</ns0:Step>
+               <ns0:Phase>Experiment</ns0:Phase>
+               <ns0:Description>[Insert Found Session Token] The attacker attempts to insert a found session token into communication with the targeted application to confirm viability for exploitation.</ns0:Description>
+            </ns0:Attack_Step>
+            <ns0:Attack_Step>
+               <ns0:Step>3</ns0:Step>
+               <ns0:Phase>Exploit</ns0:Phase>
+               <ns0:Description>[Session Token Exploitation] The attacker leverages the captured session token to interact with the targeted application in a malicious fashion, impersonating the victim.</ns0:Description>
+            </ns0:Attack_Step>
+         </ns0:Execution_Flow>
+         <ns0:Prerequisites>
+            <ns0:Prerequisite>An application that leverages sessions to perform authentication.</ns0:Prerequisite>
+         </ns0:Prerequisites>
+         <ns0:Skills_Required>
+            <ns0:Skill Level="Low">Exploiting a poorly protected identity token is a well understood attack with many helpful resources available.</ns0:Skill>
+         </ns0:Skills_Required>
+         <ns0:Resources_Required>
+            <ns0:Resource>The adversary must have the ability to communicate with the application over the network.</ns0:Resource>
+         </ns0:Resources_Required>
+         <ns0:Consequences>
+            <ns0:Consequence>
+               <ns0:Scope>Confidentiality</ns0:Scope>
+               <ns0:Scope>Integrity</ns0:Scope>
+               <ns0:Scope>Availability</ns0:Scope>
+               <ns0:Impact>Gain Privileges</ns0:Impact>
+               <ns0:Note>A successful attack can enable an adversary to gain unauthorized access to an application.</ns0:Note>
+            </ns0:Consequence>
+         </ns0:Consequences>
+         <ns0:Mitigations>
+            <ns0:Mitigation>Properly encrypt and sign identity tokens in transit, and use industry standard session key generation mechanisms that utilize high amount of entropy to generate the session key. Many standard web and application servers will perform this task on your behalf. Utilize a session timeout for all sessions. If the user does not explicitly logout, terminate their session after this period of inactivity. If the user logs back in then a new session key should be generated.</ns0:Mitigation>
+         </ns0:Mitigations>
+         <ns0:Related_Weaknesses>
+            <ns0:Related_Weakness CWE_ID="287" />
+         </ns0:Related_Weaknesses>
+         <ns0:Taxonomy_Mappings>
+            <ns0:Taxonomy_Mapping Taxonomy_Name="ATTACK">
+               <ns0:Entry_ID>1185</ns0:Entry_ID>
+               <ns0:Entry_Name>Browser Session Hijacking</ns0:Entry_Name>
+            </ns0:Taxonomy_Mapping>
+            <ns0:Taxonomy_Mapping Taxonomy_Name="ATTACK">
+               <ns0:Entry_ID>1550.001</ns0:Entry_ID>
+               <ns0:Entry_Name>Use Alternate Authentication Material:Application Access Token</ns0:Entry_Name>
+            </ns0:Taxonomy_Mapping>
+            <ns0:Taxonomy_Mapping Taxonomy_Name="ATTACK">
+               <ns0:Entry_ID>1563</ns0:Entry_ID>
+               <ns0:Entry_Name>Remote Service Session Hijacking</ns0:Entry_Name>
+            </ns0:Taxonomy_Mapping>
+            <ns0:Taxonomy_Mapping Taxonomy_Name="OWASP Attacks">
+               <ns0:Entry_Name>Session hijacking attack</ns0:Entry_Name>
+            </ns0:Taxonomy_Mapping>
+         </ns0:Taxonomy_Mappings>
+         <ns0:References>
+            <ns0:Reference External_Reference_ID="REF-603" Section="Testing for Session Hijacking" />
+         </ns0:References>
+         <ns0:Content_History>
+            <ns0:Submission>
+               <ns0:Submission_Name>CAPEC Content Team</ns0:Submission_Name>
+               <ns0:Submission_Organization>The MITRE Corporation</ns0:Submission_Organization>
+               <ns0:Submission_Date>2017-04-15</ns0:Submission_Date>
+            </ns0:Submission>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2018-07-31</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Examples-Instances, Solutions_and_Mitigations, Typical_Likelihood_of_Exploit</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2020-07-30</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Description, Taxonomy_Mappings</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2020-12-17</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated References, Taxonomy_Mappings</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2021-06-24</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Taxonomy_Mappings</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2022-02-22</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Execution_Flow</ns0:Modification_Comment>
+            </ns0:Modification>
+            <ns0:Modification>
+               <ns0:Modification_Name>CAPEC Content Team</ns0:Modification_Name>
+               <ns0:Modification_Organization>The MITRE Corporation</ns0:Modification_Organization>
+               <ns0:Modification_Date>2022-09-29</ns0:Modification_Date>
+               <ns0:Modification_Comment>Updated Taxonomy_Mappings</ns0:Modification_Comment>
+            </ns0:Modification>
+         </ns0:Content_History>
+      </ns0:Attack_Pattern>
+      

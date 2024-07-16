@@ -1,0 +1,36 @@
+// DAG Visualization
+digraph {
+	Weakness_276 [label="Weakness ID: 276"]
+	Weakness_285 [label="Weakness ID: 285"]
+	Weakness_434 [label="Weakness ID: 434"]
+	Weakness_693 [label="Weakness ID: 693"]
+	Weakness_732 [label="Weakness ID: 732"]
+	Weakness_1191 [label="Weakness ID: 1191"]
+	Weakness_1193 [label="Weakness ID: 1193"]
+	Weakness_1220 [label="Weakness ID: 1220"]
+	Weakness_1297 [label="Weakness ID: 1297"]
+	Weakness_1311 [label="Weakness ID: 1311"]
+	Weakness_1314 [label="Weakness ID: 1314"]
+	Weakness_1315 [label="Weakness ID: 1315"]
+	Weakness_1318 [label="Weakness ID: 1318"]
+	Weakness_1320 [label="Weakness ID: 1320"]
+	Weakness_1321 [label="Weakness ID: 1321"]
+	Weakness_1327 [label="Weakness ID: 1327"]
+	Attack_1 [label="Accessing Functionality Not Properly Constrained by ACLs (ID: 1)"]
+	Weakness_276 -> Attack_1
+	Weakness_285 -> Attack_1
+	Weakness_434 -> Attack_1
+	Weakness_693 -> Attack_1
+	Weakness_732 -> Attack_1
+	Weakness_1191 -> Attack_1
+	Weakness_1193 -> Attack_1
+	Weakness_1220 -> Attack_1
+	Weakness_1297 -> Attack_1
+	Weakness_1311 -> Attack_1
+	Weakness_1314 -> Attack_1
+	Weakness_1315 -> Attack_1
+	Weakness_1318 -> Attack_1
+	Weakness_1320 -> Attack_1
+	Weakness_1321 -> Attack_1
+	Weakness_1327 -> Attack_1
+}
