@@ -55,5 +55,5 @@ def main(input_file, attack_pattern_id):
 
 if __name__ == "__main__":
     input_file = 'attack_patterns.xml'  # Path to your XML file
-    attack_pattern_id = '1'  # Replace with the desired attack pattern ID
+    attack_pattern_id = '2'  # Replace with the desired attack pattern ID
     main(input_file, attack_pattern_id)

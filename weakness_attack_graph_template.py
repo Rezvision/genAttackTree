@@ -32,7 +32,7 @@ def create_xml_tree(weakness_id, related_patterns):
 
 def save_xml_tree(tree, file_name):
     # Define the target subfolder within the current directory
-    target_subfolder = "weakness_attack_templates"  # Replace with your subfolder name
+    target_subfolder = "weakness_attack_templates_scan"  # Replace with your subfolder name
     target_dir = os.path.join(os.getcwd(), target_subfolder)
     
     # Ensure the target subfolder exists
@@ -45,21 +45,29 @@ def save_xml_tree(tree, file_name):
     tree.write(file_path, encoding='utf-8', xml_declaration=True)
     print(f"File saved: {file_path}")
 
+def get_unique_weakness_ids(root, namespace):
+    unique_ids = set()
+    for weakness in root.findall(".//capec:Related_Weaknesses/capec:Related_Weakness", namespace):
+        cwe_id = weakness.get("CWE_ID")
+        if cwe_id:
+            unique_ids.add(cwe_id)
+    return unique_ids
 
-def main(input_file, weakness_id):
+def main(input_file):
     namespace = {'capec': 'http://capec.mitre.org/capec-3'}
     tree, root = parse_xml(input_file)
     
-    related_patterns = find_related_attack_patterns(root, weakness_id, namespace)
-    if related_patterns:
-        new_tree = create_xml_tree(weakness_id, related_patterns)
-        file_name = f"{weakness_id}_weakness.xml"
-        save_xml_tree(new_tree, file_name)
-    else:
-        print(f"No related attack patterns found for Weakness ID {weakness_id}.")
+    unique_weakness_ids = get_unique_weakness_ids(root, namespace)
+    
+    for weakness_id in unique_weakness_ids:
+        related_patterns = find_related_attack_patterns(root, weakness_id, namespace)
+        if related_patterns:
+            new_tree = create_xml_tree(weakness_id, related_patterns)
+            file_name = f"{weakness_id}_weakness.xml"
+            save_xml_tree(new_tree, file_name)
+        else:
+            print(f"No related attack patterns found for Weakness ID {weakness_id}.")
 
 if __name__ == "__main__":
     input_file = 'attack_patterns.xml'  # Path to your XML file
-    for i in range(1500):
-        weakness_id = str(i)  # Replace with the desired weakness ID
-        main(input_file, weakness_id)
+    main(input_file)
