@@ -81,6 +81,9 @@ def main(input_file, attack_id):
 
 if __name__ == "__main__":
     input_file = 'attack_patterns.xml'  # Path to your XML file
-    attack_id = '17'  # Replace with the desired attack pattern ID
+    
+    for i in range(3000):
+        attack_id = str(i)  # Replace with the desired attack pattern ID example '17'
+        print(attack_id)
 
     main(input_file, attack_id)
