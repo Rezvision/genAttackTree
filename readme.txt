@@ -29,10 +29,3 @@ Usage
 
     Run ttool_weakness_extractor.py to extract weaknesses from system diagram XML files.
     The script will generate an XML file compatible with ADTool, which can be imported for attack tree visualization.
-
-
-
-<ol>
-    <li>Run <code>ttool_weakness_extractor.py</code> to extract weaknesses from system diagram XML files.</li>
-    <li>The script will generate an XML file compatible with ADTool, which can be imported for attack tree visualization.</li>
-</ol>
