@@ -1,20 +1,30 @@
-#Description
-This repository contains scripts designed to transform system diagrams into attack trees by automatically extracting information, matching it with the CAPEC (Common Attack Pattern Enumeration and Classification) database, and identifying attack patterns, weaknesses, and execution flow steps. The resulting XML file can then be imported into ADTool to visualize the attack trees. This work was completed as part of a Masters project on enhancing human collaboration with data and autonomous systems at Swansea University's Computational Foundry, funded by EPSRC.
+# Attack Tree Generation from System Diagrams
 
-#File Overview
-main.py: The main script to run the entire process.
-treelib-mini: Template library for the mini example.
-treelib-full: Template library for the full example.
-treelib-sd: Template library for the StreetDrone example.
-Dependencies
-#Mandatory:
-Python 3 (https://www.python.org)
-## Optional:
-ADTool2 (https://satoss.uni.lu/members/piotr/adtool/)
-### Installation
-Install all required dependencies:
-If you want to visualize attack trees, you can use the optional ADTool2 for creating attack tree templates and viewing the output.
+This repository provides scripts to transform system diagrams into attack trees by extracting key information, aligning it with the [CAPEC (Common Attack Pattern Enumeration and Classification) database](https://capec.mitre.org/), and identifying relevant attack patterns, weaknesses, and execution flow steps. The resulting XML file can be imported into ADTool, enabling visualization of the generated attack trees.
 
-### Usage
-Simply run the main.py script to start the process. The final output will generate an XML file that can be imported into ADTool for visualization.
+This project was completed by **Reza Foratikashani** as part of a Master’s project on enhancing human collaboration with data and autonomous systems at Swansea University's Computational Foundry, funded by EPSRC. The research was supervised by **Dr Nga Hoang Nguyen**, **Dr Nicholas Micallef**, and **Professor Siraj Shaikh**.
 
+## File Overview
+
+- **`attack_execution_extractor.py`**: Main script to execute the search for relevant attacks for a certain weakness, and extracting execution flow for each attack.
+- **`detailed_weakness_extraction.py`**: full detail extractor for each weakness.
+- **`ttool_weakness_extractor.py`**: to extract weaknesses from system diagram XML files.
+
+
+## Dependencies
+
+### Required
+- [Python 3](https://www.python.org) 
+
+### Optional
+- [ADTool2](https://satoss.uni.lu/members/piotr/adtool/) for attack tree visualization.
+
+## Installation
+
+1. Install all required dependencies.
+2. (Optional) Install ADTool2 to create and view attack tree templates.
+
+## Usage
+
+1. Run `ttool_weakness_extractor.py` to extract weaknesses from system diagram XML files.
+2. The script will generate an XML file compatible with ADTool, which can be imported for attack tree visualization.
