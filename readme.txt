@@ -1,4 +1,4 @@
-## Attack Tree Generation from System Diagrams
+# Attack Tree Generation from System Diagrams
 
 This repository provides scripts to transform system diagrams into attack trees by extracting key information, aligning it with the [CAPEC (Common Attack Pattern Enumeration and Classification) database](https://capec.mitre.org/), and identifying relevant attack patterns, weaknesses, and execution flow steps. The resulting XML file can be imported into ADTool, enabling visualization of the generated attack trees.
 
@@ -27,7 +27,3 @@ This project was completed by **Reza Foratikashani** as part of a Master’s pro
 
 1. Run `ttool_weakness_extractor.py` to extract weaknesses from system diagram XML files.
 2. The script will generate an XML file compatible with ADTool, which can be imported for attack tree visualization.
-
----
-
-This version ensures correct formatting on GitHub with readable headings and bullet points.
