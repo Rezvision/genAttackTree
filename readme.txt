@@ -1,37 +1,36 @@
-<h2>Attack Tree Generation from System Diagrams</h2>
+Attack Tree Generation from System Diagrams
 
-<p>This repository provides scripts to transform system diagrams into attack trees by extracting key information, aligning it with the <a href="https://capec.mitre.org/">CAPEC (Common Attack Pattern Enumeration and Classification) database</a>, and identifying relevant attack patterns, weaknesses, and execution flow steps. The resulting XML file can be imported into ADTool, enabling visualization of the generated attack trees.</p>
+This repository provides scripts to transform system diagrams into attack trees by extracting key information, aligning it with the CAPEC (Common Attack Pattern Enumeration and Classification) database (https://capec.mitre.org/), and identifying relevant attack patterns, weaknesses, and execution flow steps. The resulting XML file can be imported into ADTool, enabling visualization of the generated attack trees.
 
-<p>This project was completed by <strong>Reza Foratikashani</strong> as part of a Master’s project on enhancing human collaboration with data and autonomous systems at Swansea University's Computational Foundry, funded by EPSRC. The research was supervised by <strong>Dr Nga Hoang Nguyen</strong>, <strong>Dr Nicholas Micallef</strong>, and <strong>Professor Siraj Shaikh</strong>.</p>
+This project was completed by Reza Foratikashani as part of a Master’s project on enhancing human collaboration with data and autonomous systems at Swansea University's Computational Foundry, funded by EPSRC. The research was supervised by Dr Nga Hoang Nguyen, Dr Nicholas Micallef, and Professor Siraj Shaikh.
 
-<h2>File Overview</h2>
+File Overview
 
-<ul>
-    <li><strong><code>attack_execution_extractor.py</code></strong>: Main script to execute the search for relevant attacks for a specific weakness and extract execution flow for each attack.</li>
-    <li><strong><code>detailed_weakness_extraction.py</code></strong>: Full-detail extractor for each weakness.</li>
-    <li><strong><code>ttool_weakness_extractor.py</code></strong>: Script to extract weaknesses from system diagram XML files.</li>
-</ul>
+    attack_execution_extractor.py: Main script to execute the search for relevant attacks for a specific weakness and extract execution flow for each attack.
+    detailed_weakness_extraction.py: Full-detail extractor for each weakness.
+    ttool_weakness_extractor.py: Script to extract weaknesses from system diagram XML files.
 
-<h2>Dependencies</h2>
+Dependencies
 
-<h3>Required</h3>
-<ul>
-    <li><a href="https://www.python.org">Python 3</a></li>
-</ul>
+Required:
 
-<h3>Optional</h3>
-<ul>
-    <li><a href="https://satoss.uni.lu/members/piotr/adtool/">ADTool2</a> for attack tree visualization.</li>
-</ul>
+    Python 3 (https://www.python.org)
 
-<h2>Installation</h2>
+Optional:
 
-<ol>
-    <li>Install all required dependencies.</li>
-    <li><em>(Optional)</em> Install ADTool2 to create and view attack tree templates.</li>
-</ol>
+    ADTool2 (https://satoss.uni.lu/members/piotr/adtool/) for attack tree visualization.
 
-<h2>Usage</h2>
+Installation
+
+    Install all required dependencies.
+    (Optional) Install ADTool2 to create and view attack tree templates.
+
+Usage
+
+    Run ttool_weakness_extractor.py to extract weaknesses from system diagram XML files.
+    The script will generate an XML file compatible with ADTool, which can be imported for attack tree visualization.
+
+
 
 <ol>
     <li>Run <code>ttool_weakness_extractor.py</code> to extract weaknesses from system diagram XML files.</li>
